@@ -7,7 +7,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    User.create(user_params)
+    user = User.create(name: params[:name], password: params[:password])
+    payload = {user_id: user.id}
+    token = issue_token(payload)
+    render json: {user: user, jwt: token}
   end
 
 

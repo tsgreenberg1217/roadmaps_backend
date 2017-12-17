@@ -10,6 +10,7 @@ class ApplicationController < ActionController::API
   def current_user
     authenticate_or_request_with_http_token do |jwt_token, options|
       begin
+        ## I get the correct token but it keeps decoding to a differnt user
         decoded_token = JWT.decode(jwt_token, ENV['SECRET'])
 
       rescue JWT::DecodeError
