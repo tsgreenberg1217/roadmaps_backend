@@ -2,6 +2,10 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :trips
+  
+  has_many :stops, through: :trips
+  has_many :activities, through: :stops
+
   has_many :friendships, through: :trips
   has_many :friends, through: :friendships
 
