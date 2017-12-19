@@ -3,7 +3,9 @@ class Api::V1::SessionsController < ApplicationController
   skip_before_action :authorized, only: [:create]
 
   def show
-    render json: current_user
+    id = current_user.id
+    user = User.find(id)
+    render json: user
   end
 
   def create
@@ -11,7 +13,7 @@ class Api::V1::SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       payload = {user_id: user.id}
       token = issue_token(payload)
-      render json: {user: user, id: user.id, jwt: token }
+      render json: {user: user, id: user.id,trips: user.trips, jwt: token }
     else
       render json: { error: "some bad stuff happened"}
     end
