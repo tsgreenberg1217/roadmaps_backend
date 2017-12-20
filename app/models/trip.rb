@@ -6,4 +6,8 @@ class Trip < ApplicationRecord
   has_many :stops
   has_many :activities, through: :stops
 
+  def trip_stops
+    self.stops.all
+  end
+
 end

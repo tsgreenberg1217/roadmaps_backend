@@ -1,5 +1,12 @@
 class Api::V1::TripsController < ApplicationController
 
+
+
+  def index
+    user = User.find(current_user.id)
+    render json: user.trips
+  end
+
   def show
     trip_id = params[:id].to_i
     trip = current_user.trips.find_by(id: trip_id)
