@@ -19,7 +19,6 @@ class Api::V1::StopsController < ApplicationController
   end
 
   def destroy
-  # byebug
   stop = Stop.find(params[:id])
   user = User.find(current_user.id)
   trip = user.trips.find_by(id: stop.trip_id)
