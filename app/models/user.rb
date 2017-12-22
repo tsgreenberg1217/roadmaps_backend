@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :trips
-  
+
   has_many :stops, through: :trips
   has_many :activities, through: :stops
 
@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def on_trips
-    self.on_trip_friendships.map{|f| Trip.find(f.trip_id)}
+    self.on_trip_friendships.map{|f| Trip.find(f.trip_id)} #.where
   end
 
   def user_trips
