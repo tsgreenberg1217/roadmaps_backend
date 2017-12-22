@@ -18,4 +18,14 @@ class Api::V1::StopsController < ApplicationController
     render json: {stop: stop, stops:stops, trip: user.trips}
   end
 
+  def destroy
+  # byebug
+  stop = Stop.find(params[:id])
+  user = User.find(current_user.id)
+  trip = user.trips.find_by(id: stop.trip_id)
+  stop.destroy
+  render json: {stop: stop, stops:trip.stops, trip: user.trips}
+
+  end
+
 end
