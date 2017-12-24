@@ -5,8 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
-
+gem 'json'
+gem 'rest-client'
+gem 'nokogiri'
+gem "httparty"
 gem "figaro"
 
 gem 'jwt'

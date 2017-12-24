@@ -1,19 +1,24 @@
-class Api::V1::StopsController < ApplicationController
+require_relative '../../../helpers/GoogleAPI'
 
+class Api::V1::StopsController < ApplicationController
+  extend GoogleAPI
   def show
+    byebug
     user = current_user
     trip = user.trips.find(id)
-    stops = trip.stops.all
+    stops = trip.stops.all.sort_by{|stop| stop.order}
     render json: stops
   end
 
 
   def create
-    id = params[:trip_id]
+
+    GoogleAPI.coordinates(params[:state][:stop])
+    trip_id = params[:stop][:trip_id]
     user = current_user
-    trip = user.trips.find(id)
-    trip.stops.create(name: params[:stop])
-    stops = trip.stops.all
+    trip = user.trips.find(trip_id)
+    trip.stops.create(name: params[:state][:stop], order: params[:state][:order].to_i)
+    stops = trip.stops.all.sort_by{|stop| stop.order}
     stop = trip.stops.last
     render json: {stop: stop, stops:stops, trip: user.trips}
   end
@@ -23,7 +28,8 @@ class Api::V1::StopsController < ApplicationController
   user = User.find(current_user.id)
   trip = user.trips.find_by(id: stop.trip_id)
   stop.destroy
-  render json: {stop: stop, stops:trip.stops, trip: user.trips}
+  stops = trip.stops.all.sort_by{|stop| stop.order}
+  render json: {trip: trip, stops: stops}
 
   end
 
