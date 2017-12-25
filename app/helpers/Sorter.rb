@@ -3,6 +3,5 @@ module Sorter
     stops.map.with_index{|stop,i|
       stop.order = i+1
       num = i}
-
   end
 end

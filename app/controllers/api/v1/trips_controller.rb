@@ -11,7 +11,7 @@ class Api::V1::TripsController < ApplicationController
     trip_id = params[:id].to_i
     trip = current_user.trips.find_by(id: trip_id)
     stops = trip.stops.all.sort_by{|stop| stop.order}
-    # byebug
+    Sorter.recount(stops)
     render json: {trip:trip, stops: stops}
   end
 
