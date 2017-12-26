@@ -7,6 +7,7 @@ class Api::V1::StopsController < ApplicationController
     trip = user.trips.find(id)
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops)
+    byebug
     render json: stops
   end
 

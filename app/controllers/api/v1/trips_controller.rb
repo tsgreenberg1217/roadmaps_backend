@@ -12,7 +12,10 @@ class Api::V1::TripsController < ApplicationController
     trip = current_user.trips.find_by(id: trip_id)
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops)
-    render json: {trip:trip, stops: stops}
+    friends = []
+    trip.friendships.count > 0 ? friends = trip.friendships.map{|f| f.friend} : friends =['there are no friends']
+    byebug
+    render json: {trip:trip, stops: stops, friends: friends}
   end
 
   def create
