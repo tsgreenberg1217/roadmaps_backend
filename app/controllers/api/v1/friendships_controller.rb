@@ -7,8 +7,12 @@ class Api::V1::FriendshipsController < ApplicationController
     trip.friendships.create(friend_id: friend.id)
     friendships = trip.friendships
     friends = trip.friendships.map{|f| f.friend}
-    render json: {trip: trip,friends:friends}
+    render json: {trip: trip, friends:friends, stops: trip.stops}
   end
 
+  def destroy
+    user = current_user
+    trip = user.trips.find_by(id: params[:trip_id])
+  end
 
 end

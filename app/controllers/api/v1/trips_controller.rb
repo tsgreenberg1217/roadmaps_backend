@@ -14,7 +14,6 @@ class Api::V1::TripsController < ApplicationController
     Sorter.recount(stops)
     friends = []
     trip.friendships.count > 0 ? friends = trip.friendships.map{|f| f.friend} : friends =['there are no friends']
-    byebug
     render json: {trip:trip, stops: stops, friends: friends}
   end
 
