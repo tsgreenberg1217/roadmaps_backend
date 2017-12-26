@@ -7,7 +7,7 @@ class Api::V1::FriendshipsController < ApplicationController
     trip.friendships.create(friend_id: friend.id)
     friendships = trip.friendships
     friends = trip.friendships.map{|f| f.friend}
-    render json: friends
+    render json: {trip: trip,friends:friends}
   end
 
 

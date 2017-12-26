@@ -1,6 +1,6 @@
 require 'rest-client'
 module GoogleAPI
-  KEY = "AIzaSyAa_1I2oAv-cNMvVnW0EeAW6WaUeBniIhE"
+  KEY = ""
 
   def self.url(place)
     "https://maps.googleapis.com/maps/api/geocode/json?address=#{place}&key=#{KEY}"
