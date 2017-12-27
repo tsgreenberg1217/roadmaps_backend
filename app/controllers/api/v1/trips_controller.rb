@@ -31,4 +31,11 @@ class Api::V1::TripsController < ApplicationController
   end
 
 
+  def ontrips
+    user = current_user
+    on_trips = user.on_trips
+    render json: on_trips
+  end
+
+
 end

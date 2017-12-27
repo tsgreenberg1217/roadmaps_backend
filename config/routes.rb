@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :friendships
       post "/auth", to: "sessions#create"
       get "/current_user", to: "sessions#show"
+      get "/ontrips", to: "trips#ontrips"
     end
   end
 end

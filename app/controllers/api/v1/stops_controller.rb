@@ -19,6 +19,7 @@ class Api::V1::StopsController < ApplicationController
     trip.stops.create(name: params[:state][:stop], order: params[:state][:order].to_i, lat: location["lat"], lng: location["lng"])
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops)
+    durations = GoogleAPI.getDurations(stops)
     stop = trip.stops.last
     render json: {stop: stop, stops:stops, trip: user.trips}
   end
