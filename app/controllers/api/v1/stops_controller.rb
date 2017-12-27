@@ -12,7 +12,7 @@ class Api::V1::StopsController < ApplicationController
 
 
   def create
-    location = GoogleAPI.coordinates(params[:state][:stop]) #Gets coordinated
+    location = GoogleAPI.coordinates(params[:state][:stop]) #Gets coordinates
     trip_id = params[:stop][:trip_id]
     user = current_user
     trip = user.trips.find(trip_id)
@@ -29,9 +29,9 @@ class Api::V1::StopsController < ApplicationController
       stops[index].update(duration: durations[index-1])
       index += 1
     end
-
     stop = trip.stops.last
-    render json: {stop: stop, stops:stops, trip: user.trips}
+
+    render json: {stop:stop,  stops:stops, trip: user.trips}
   end
 
   def destroy
