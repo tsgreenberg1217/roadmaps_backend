@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post "/auth", to: "sessions#create"
       get "/current_user", to: "sessions#show"
       get "/ontrips", to: "trips#ontrips"
+      get "/ontrips/:id", to: "trips#show_ontrips"
     end
   end
 end
