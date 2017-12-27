@@ -1,6 +1,6 @@
 require 'rest-client'
 module GoogleAPI
-  KEY = ""
+  KEY = "AIzaSyAa_1I2oAv-cNMvVnW0EeAW6WaUeBniIhE"
 
   def self.location_url(place)
     "https://maps.googleapis.com/maps/api/geocode/json?address=#{place}&key=#{KEY}"
@@ -21,7 +21,6 @@ module GoogleAPI
       destinations.push("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=#{stops[index].lat},#{stops[index].lng}&destinations=#{stops[index+1].lat}%2C#{stops[index+1].lng}&key=#{KEY}")
       index += 1
     end
-    byebug
     destinations
   end
 
