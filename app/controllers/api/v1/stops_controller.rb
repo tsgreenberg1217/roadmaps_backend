@@ -20,6 +20,13 @@ class Api::V1::StopsController < ApplicationController
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops)
     durations = GoogleAPI.getDurations(stops)
+
+    index = 1
+    while index < stops.count do
+      stops[index].update(duration: durations[index])
+      index += 1
+    end
+  
     stop = trip.stops.last
     render json: {stop: stop, stops:stops, trip: user.trips}
   end
