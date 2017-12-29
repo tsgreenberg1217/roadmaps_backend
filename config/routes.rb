@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users
-      resources :trips
-      resources :stops
+      resources :trips do
+        resources :stops
+      end
       resources :friendships
       post "/auth", to: "sessions#create"
       get "/current_user", to: "sessions#show"
