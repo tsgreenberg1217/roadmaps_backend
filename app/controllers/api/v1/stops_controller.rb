@@ -70,6 +70,7 @@ class Api::V1::StopsController < ApplicationController
 
     stops = trip.stops.all.sort_by{|stop| stop.order}
 
+    binding.pry
     durations = GoogleAPI.getDurations(stops)
     index = 1
       while index < stops.count do
