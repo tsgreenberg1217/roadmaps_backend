@@ -56,8 +56,8 @@ class Api::V1::StopsController < ApplicationController
 
   def updateOrder
     trip = Trip.find(params['trip_id'])
-    stops = trip.stops
-    stop = stops.find(params['stop_id'])
+    stops = trip.stops.all.sort_by{|stop| stop.order}
+    stop = Stop.find(params['stop_id'])
     index = stops.index(stop)
     place = index + 1
       if params['move'] === 'UP'
@@ -67,17 +67,16 @@ class Api::V1::StopsController < ApplicationController
         stops[index].update(order: place + 1)
         stops[index + 1].update(order: place)
       end
-
+  
     stops = trip.stops.all.sort_by{|stop| stop.order}
 
-    binding.pry
     durations = GoogleAPI.getDurations(stops)
     index = 1
       while index < stops.count do
         stops[index].update(duration: durations[index-1])
         index += 1
       end
-    render json: {trip: trip, stops: stops}
+      render json: {trip: trip, stops: stops}
 
   end
 
