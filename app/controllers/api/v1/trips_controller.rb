@@ -9,7 +9,7 @@ class Api::V1::TripsController < ApplicationController
 
   def show
     trip_id = params[:id].to_i
-    trip = current_user.trips.find_by(id: trip_id)
+    trip = Trip.find(trip_id)
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops)
     friends = []
@@ -36,11 +36,5 @@ class Api::V1::TripsController < ApplicationController
     on_trips = user.on_trips
     render json: on_trips
   end
-
-  def show_ontrips
-    user = current_user
-    
-  end
-
 
 end

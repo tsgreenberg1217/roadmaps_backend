@@ -1,5 +1,5 @@
 require_relative '../../../helpers/GoogleAPI'
-
+require 'pry'
 class Api::V1::StopsController < ApplicationController
   extend GoogleAPI
   def show
@@ -44,12 +44,39 @@ class Api::V1::StopsController < ApplicationController
 
   durations = GoogleAPI.getDurations(stops)
   index = 1
-  while index < stops.count do
-    stops[index].update(duration: durations[index-1])
-    index += 1
-  end
+    while index < stops.count do
+      stops[index].update(duration: durations[index-1])
+      index += 1
+    end
 
   render json: {trip: trip, stops: stops}
+
+  end
+
+
+  def updateOrder
+    trip = Trip.find(params['trip_id'])
+    stops = trip.stops
+    stop = stops.find(params['stop_id'])
+    index = stops.index(stop)
+    place = index + 1
+      if params['move'] === 'UP'
+        stops[index].update(order: place - 1)
+        stops[index - 1].update(order: place)
+      else
+        stops[index].update(order: place + 1)
+        stops[index + 1].update(order: place)
+      end
+
+    stops = trip.stops.all.sort_by{|stop| stop.order}
+
+    durations = GoogleAPI.getDurations(stops)
+    index = 1
+      while index < stops.count do
+        stops[index].update(duration: durations[index-1])
+        index += 1
+      end
+    render json: {trip: trip, stops: stops}
 
   end
 

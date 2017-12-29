@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get "/current_user", to: "sessions#show"
       get "/ontrips", to: "trips#ontrips"
       get "/ontrips/:id", to: "trips#show_ontrips"
+      patch "/update-order", to: "stops#updateOrder"
     end
   end
 end
