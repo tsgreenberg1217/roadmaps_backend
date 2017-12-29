@@ -6,14 +6,6 @@ module GoogleAPI
     "https://maps.googleapis.com/maps/api/geocode/json?address=#{place}&key=#{KEY}"
   end
 
-  # def self.duration_url(stops)
-  #   destinations = []
-  #   origin = stops.shift
-  #   stops.each{|loc| destinations += "#{loc['lat']}%2C#{loc['lng']}%7C"}
-  #   destinations.chomp('%7C')
-  #   "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=#{origin.lat},#{origin.lng}&destinations=#{destinations}&key=#{KEY}"
-  # end
-
   def self.duration_url(stops)
     destinations = []
     index = 0
@@ -29,6 +21,15 @@ module GoogleAPI
     json = urls.map{ |url| JSON.parse(RestClient.get(url)) }
     durations = json.map{|j| j['rows'][0]['elements'][0]['duration']['text']}
     durations
+  end
+
+  def self.updateStops(stops,durations)
+    index = 1
+    while index < stops.count do
+      stops[index].update(duration: durations[index-1])
+      index += 1
+    end
+    stops
   end
 
 
