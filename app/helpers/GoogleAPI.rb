@@ -1,4 +1,6 @@
 require 'rest-client'
+require 'pry'
+
 module GoogleAPI
   KEY = "AIzaSyAa_1I2oAv-cNMvVnW0EeAW6WaUeBniIhE"
 
@@ -20,10 +22,7 @@ module GoogleAPI
     urls = self.duration_url(stops)
     json = urls.map{ |url| JSON.parse(RestClient.get(url)) }
     durations = json.map{|j| j['rows'][0]['elements'][0]['duration']['text']}
-    durations
-  end
-
-  def self.updateStops(stops,durations)
+    # durations
     index = 1
     while index < stops.count do
       stops[index].update(duration: durations[index-1])

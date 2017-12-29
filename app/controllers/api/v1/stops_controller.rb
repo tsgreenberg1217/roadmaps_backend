@@ -18,19 +18,9 @@ class Api::V1::StopsController < ApplicationController
     trip = user.trips.find(trip_id)
     trip.stops.create(name: params[:state][:stop], order: params[:state][:order].to_i, lat: location["lat"], lng: location["lng"])
     stops = trip.stops.all.sort_by{|stop| stop.order}
-
     Sorter.recount(stops) #Sorts the stops by order
-
-    #Sets all the durations by the order
-    durations = GoogleAPI.getDurations(stops)
-
-    index = 1
-    while index < stops.count do
-      stops[index].update(duration: durations[index-1])
-      index += 1
-    end
+    stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
     stop = trip.stops.last
-
     render json: {stop:stop,  stops:stops, trip: user.trips}
   end
 
@@ -41,16 +31,8 @@ class Api::V1::StopsController < ApplicationController
   stop.destroy
   stops = trip.stops.all.sort_by{|stop| stop.order}
   Sorter.recount(stops)
-
-  durations = GoogleAPI.getDurations(stops)
-  index = 1
-    while index < stops.count do
-      stops[index].update(duration: durations[index-1])
-      index += 1
-    end
-
+  stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
   render json: {trip: trip, stops: stops}
-
   end
 
 
@@ -67,16 +49,12 @@ class Api::V1::StopsController < ApplicationController
         stops[index].update(order: place + 1)
         stops[index + 1].update(order: place)
       end
-  
+
     stops = trip.stops.all.sort_by{|stop| stop.order}
 
-    durations = GoogleAPI.getDurations(stops)
-    index = 1
-      while index < stops.count do
-        stops[index].update(duration: durations[index-1])
-        index += 1
-      end
-      render json: {trip: trip, stops: stops}
+    stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
+    
+    render json: {trip: trip, stops: stops}
 
   end
 
