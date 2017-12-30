@@ -13,8 +13,7 @@ class Api::V1::StopsController < ApplicationController
 
 
   def show
-    binding.pry
-    stop = Stop.find(params[:stop_id])
+    stop = Stop.find(params[:id])
     render json: stop
   end
 
