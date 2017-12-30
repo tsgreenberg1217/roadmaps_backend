@@ -2,12 +2,20 @@ require_relative '../../../helpers/GoogleAPI'
 require 'pry'
 class Api::V1::StopsController < ApplicationController
   extend GoogleAPI
-  def show
+
+  def index
     user = current_user
     trip = user.trips.find(id)
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops)
     render json: stops
+  end
+
+
+  def show
+    binding.pry
+    stop = Stop.find(params[:stop_id])
+    render json: stop
   end
 
 
@@ -53,7 +61,7 @@ class Api::V1::StopsController < ApplicationController
     stops = trip.stops.all.sort_by{|stop| stop.order}
 
     stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
-    
+
     render json: {trip: trip, stops: stops}
 
   end
