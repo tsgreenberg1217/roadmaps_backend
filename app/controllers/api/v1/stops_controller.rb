@@ -14,7 +14,9 @@ class Api::V1::StopsController < ApplicationController
 
   def show
     stop = Stop.find(params[:id])
-    render json: {stop: stop, activities: stop.activities}
+    activities = stop.activities
+
+    render json: {stop: stop, activities: stop.activities, include: 'pictures'}
   end
 
 

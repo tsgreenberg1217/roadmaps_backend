@@ -5,7 +5,9 @@ Rails.application.routes.draw do
       resources :users
       resources :trips do
         resources :stops do
-          resources :activities
+          resources :activities do
+            resources :pictures 
+          end
         end
       end
       post "/auth", to: "sessions#create"
