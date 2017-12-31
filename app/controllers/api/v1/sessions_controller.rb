@@ -15,7 +15,7 @@ class Api::V1::SessionsController < ApplicationController
       token = issue_token(payload)
       render json: {user: user, id: user.id,trips: user.trips, jwt: token }
     else
-      render json: { error: "some bad stuff happened"}
+      render json: { error: "User isnt authorized"}
     end
   end
 end
