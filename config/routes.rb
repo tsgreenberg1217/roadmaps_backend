@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :trips do
         resources :stops do
           resources :activities do
-            resources :pictures 
+            resources :pictures
           end
         end
       end
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get "/ontrips", to: "trips#ontrips"
       get "/ontrips/:id", to: "trips#show_ontrips"
       patch "/update-order", to: "stops#updateOrder"
+      get "/everytrip", to: "trips#everytrip"
     end
   end
 end

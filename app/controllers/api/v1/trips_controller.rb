@@ -1,6 +1,8 @@
 class Api::V1::TripsController < ApplicationController
 
-
+  def everytrip
+    render json: Trip.all
+  end
 
   def index
     user = User.find(current_user.id)

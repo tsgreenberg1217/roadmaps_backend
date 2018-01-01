@@ -16,16 +16,17 @@ class Api::V1::StopsController < ApplicationController
     stop = Stop.find(params[:id])
     activities = stop.activities
 
-    render json: {stop: stop, activities: stop.activities, include: 'pictures'}
+    render json: {stop: stop, activities: stop.activities}
   end
 
 
   def create
-    location = GoogleAPI.coordinates(params[:state][:stop]) #Gets coordinates
-    trip_id = params[:stop][:trip_id]
+    location = GoogleAPI.coordinates(params[:stop]) #Gets coordinates
+    trip_id = params[:trip_id]
     user = current_user
     trip = user.trips.find(trip_id)
-    trip.stops.create(name: params[:state][:stop], order: params[:state][:order].to_i, lat: location["lat"], lng: location["lng"])
+    order = trip.stops.count + 1
+    trip.stops.create(name: params[:stop], order: order, lat: location["lat"], lng: location["lng"])
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops) #Sorts the stops by order
     stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
