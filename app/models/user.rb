@@ -12,7 +12,8 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships
 
   def on_trip_friendships
-    Friendship.all.select{|f| f.friend_id == self.id}
+    # Friendship.all.select{|f| f.friend_id == self.id}
+    Friendship.where(friend_id: self.id)
   end
 
   def on_trips

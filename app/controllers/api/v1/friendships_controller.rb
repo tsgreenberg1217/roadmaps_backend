@@ -15,4 +15,10 @@ class Api::V1::FriendshipsController < ApplicationController
     trip = user.trips.find_by(id: params[:trip_id])
   end
 
+  def friendSearch
+    string = params[:name]
+    length = params[:name].length
+    results = User.where('substr(name, 1, ?) = ?', length, string)
+  end
+
 end
