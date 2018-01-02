@@ -31,7 +31,11 @@ class Api::V1::StopsController < ApplicationController
     Sorter.recount(stops) #Sorts the stops by order
     stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
     stop = trip.stops.last
-    render json: {stop:stop,  stops:stops, trip: user.trips}
+
+    friends = []
+    trip.friendships.count > 0 ? friends = trip.friendships.map{|f| f.friend} : friends =['there are no friends']
+
+    render json: {stop:stop,  stops:stops, trip: user.trips, friends: friends}
   end
 
   def destroy
@@ -42,7 +46,9 @@ class Api::V1::StopsController < ApplicationController
   stops = trip.stops.all.sort_by{|stop| stop.order}
   Sorter.recount(stops)
   stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
-  render json: {trip: trip, stops: stops}
+  friends = []
+  trip.friendships.count > 0 ? friends = trip.friendships.map{|f| f.friend} : friends =['there are no friends']
+  render json: {trip: trip, stops: stops, friends: friends}
   end
 
 
