@@ -1,3 +1,5 @@
+require 'pry'
+
 class Api::V1::TripsController < ApplicationController
 
   def everytrip
@@ -21,7 +23,7 @@ class Api::V1::TripsController < ApplicationController
 
   def create
     user = User.find(current_user.id)
-    user.trips.create(title: params[:value])
+    user.trips.create(title: params[:value][:trip], photo: params[:value][:fileURL])
     render json: user.trips
   end
 
