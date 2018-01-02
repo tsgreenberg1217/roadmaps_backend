@@ -15,8 +15,7 @@ class Api::V1::StopsController < ApplicationController
   def show
     stop = Stop.find(params[:id])
     activities = stop.activities
-
-    render json: {stop: stop, activities: stop.activities}
+    render json: {stop: stop, activities: activities.map { |act| ActivitySerializer.new(act) } }
   end
 
 
