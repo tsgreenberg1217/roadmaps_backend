@@ -6,6 +6,7 @@ class Api::V1::PicturesController < ApplicationController
     activity.pictures.create(url: params[:url])
     stop_id = activity.stop_id
     stop = Stop.find(stop_id)
-    render json: activity
+    activities = stop.activities
+    render json: {stop: stop, activities: activities.map { |act| ActivitySerializer.new(act) } }
   end
 end
