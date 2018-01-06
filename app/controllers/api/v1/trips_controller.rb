@@ -7,8 +7,9 @@ class Api::V1::TripsController < ApplicationController
   end
 
   def index
+    binding.pry
     user = User.find(current_user.id)
-    render json: user.trips
+    render json: user
   end
 
   def show
