@@ -4,6 +4,7 @@ class Api::V1::FriendshipsController < ApplicationController
     user = current_user
     trip = user.trips.find_by(id: params[:trip_id])
     friend = User.find_by(name: params[:friend])
+    # binding.pry
     trip.friendships.create(friend_id: friend.id)
     friendships = trip.friendships
     friends = trip.friendships.map{|f| f.friend}
