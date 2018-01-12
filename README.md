@@ -3,7 +3,7 @@
 1. Clone the repo and make your current directory the root of the folder
 2. in your terminal, run 'bundle install'
 3. run 'rake db: create', then 'rake db:migrate'
-4. finally, run 'rails s' to run the server
+4. finally, run 'rails s' and run the server on port 3000
 
 
 ## Backend features
