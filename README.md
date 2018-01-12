@@ -6,7 +6,7 @@
 4. finally, run 'rails s' to run the server
 
 
-#Backend features
+##Backend features
 
 *Alows CRUD functions with Users, Trips, Stops, Activities, and Pictures
 
