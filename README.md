@@ -1,24 +1,15 @@
-# README
+# Instructions to run the the Roadmaps backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. Clone the repo and make your current directory the root of the folder
+2. in your terminal, run 'bundle install'
+3. run 'rake db: create', then 'rake db:migrate'
+4. finally, run 'rails s' to run the server
 
-Things you may want to cover:
 
-* Ruby version
+#Backend features
 
-* System dependencies
+*Alows CRUD functions with Users, Trips, Stops, Activities, and Pictures
 
-* Configuration
+*Authenticates users through their JWT token and encrypts their passwords with bcrypt
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+*Includes Google API helpers that are integrated with the CRUD functions. Allows each Stop to be created and updated with stop information such as travel time and distance.
