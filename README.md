@@ -6,10 +6,10 @@
 4. finally, run 'rails s' to run the server
 
 
-##Backend features
+## Backend features
 
-*Alows CRUD functions with Users, Trips, Stops, Activities, and Pictures
+* Alows CRUD functions with Users, Trips, Stops, Activities, and Pictures
 
-*Authenticates users through their JWT token and encrypts their passwords with bcrypt
+* Authenticates users through their JWT token and encrypts their passwords with bcrypt
 
-*Includes Google API helpers that are integrated with the CRUD functions. Allows each Stop to be created and updated with stop information such as travel time and distance.
+* Includes Google API helpers that are integrated with the CRUD functions. Allows each Stop to be created and updated with stop information such as travel time and distance.
