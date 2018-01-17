@@ -9,7 +9,6 @@ class ApplicationController < ActionController::API
 
 
   def current_user
-    # binding.pry
     authenticate_or_request_with_http_token do |jwt_token, options|
       begin
         decoded_token = JWT.decode(jwt_token, ENV['SECRET'])
