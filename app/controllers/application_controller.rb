@@ -19,7 +19,7 @@ class ApplicationController < ActionController::API
 
       if decoded_token[0]["user_id"]
         @current_user ||= User.find(decoded_token[0]["user_id"])
-      else$ git remote -v
+      else
 
       end
     end
