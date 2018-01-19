@@ -7,7 +7,7 @@ class Trip < ApplicationRecord
   has_many :activities, through: :stops
 
   def trip_stops
-    self.stops.all
+    self.stops.all.map {|stop|  StopSerializer.new(stop)}
   end
 
 end

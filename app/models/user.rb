@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   def user_trips
-    self.trips.all
+    self.trips.all.map {|trip|  TripSerializer.new(trip)}
   end
 
 end
