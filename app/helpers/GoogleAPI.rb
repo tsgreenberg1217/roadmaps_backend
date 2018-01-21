@@ -32,11 +32,25 @@ module GoogleAPI
   end
 
 
+  def self.validateCoordinates
+    url = self.location_url(place)
+    response = RestClient.get(url)
+    begin
+      coordinates = JSON.parse(response)['results'][0]['geometry']['location']
+    rescue
+      binding.pry
+      return 'invalid place'
+    end
+    coordinates
+  extend
+
+
 
   def self.coordinates(place)
     url = self.location_url(place)
     response = RestClient.get(url)
-    JSON.parse(response)['results'][0]['geometry']['location']
+    coordinates = JSON.parse(response)['results'][0]['geometry']['location']
+
   end
 
 

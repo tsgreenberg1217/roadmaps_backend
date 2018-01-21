@@ -24,7 +24,9 @@ class Api::V1::StopsController < ApplicationController
     trip_id = params[:trip_id]
     user = current_user
     trip = user.trips.find(trip_id)
-    order = trip.stops.count + 1
+    order = trip.stops.count
+    new_order = trip.stops.count +1
+    trip.stops.last.update(order: new_order)
     trip.stops.create(name: params[:stop], order: order, lat: location["lat"], lng: location["lng"])
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops) #Sorts the stops by order

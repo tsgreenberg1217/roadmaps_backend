@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get "/ontrips/:id", to: "trips#show_ontrips"
       patch "/update-order", to: "stops#updateOrder"
       get "/everytrip", to: "trips#everytrip"
+      post "/validations/start-end", to: "validations#start_end"
     end
   end
 end

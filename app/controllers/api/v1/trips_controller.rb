@@ -1,8 +1,11 @@
 require_relative '../../../helpers/GoogleAPI'
+require_relative '../../../helpers/Pictures'
+
 require 'pry'
 
 class Api::V1::TripsController < ApplicationController
   extend GoogleAPI
+  extend Pictures
 
   def everytrip
     render json: Trip.all
@@ -24,6 +27,7 @@ class Api::V1::TripsController < ApplicationController
   end
 
   def create
+    # binding.pry
     user = User.find(current_user.id)
     user.trips.create(title: params[:trip], photo: params[:fileURL])
     trip = user.trips.last
