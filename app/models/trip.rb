@@ -10,4 +10,8 @@ class Trip < ApplicationRecord
     self.stops.all.map {|stop|  StopSerializer.new(stop)}
   end
 
+  # def friends
+  #   self.friends
+  # end
+
 end

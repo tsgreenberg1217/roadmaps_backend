@@ -24,7 +24,6 @@ class Api::V1::TripsController < ApplicationController
   end
 
   def create
-    binding.pry
     user = User.find(current_user.id)
     user.trips.create(title: params[:trip], photo: params[:fileURL])
     trip = user.trips.last
@@ -38,8 +37,8 @@ class Api::V1::TripsController < ApplicationController
     Sorter.recount(stops) #Sorts the stops by order
     stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
     user_trips = user.trips
-    binding.pry
-    render json: {trips: user_trips.map {|trip| TripSerializer.new(trip)}, stops: stops.map{|stop| StopSerializer.new(stop)}}
+    # render json: {trips: user_trips.map {|trip| TripSerializer.new(trip)}, stops: stops.map{|stop| StopSerializer.new(stop)}}
+    render json: trip
   end
 
   def destroy
