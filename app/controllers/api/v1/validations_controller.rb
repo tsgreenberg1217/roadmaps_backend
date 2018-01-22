@@ -4,10 +4,9 @@ class Api::V1::ValidationsController < ApplicationController
   extend GoogleAPI
 
   def start_end
-    start_location = GoogleAPI.coordinates(params[:start])
-    end_location = GoogleAPI.coordinates(params[:end])
-    binding.pry
-    render json: {start_location,end_location}
+    start_location = GoogleAPI.validateCoordinates(params[:start])
+    end_location = GoogleAPI.validateCoordinates(params[:end])
+    render json: {start: start_location,end: end_location}
 
   end
 
