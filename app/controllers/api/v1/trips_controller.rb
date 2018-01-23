@@ -37,7 +37,7 @@ class Api::V1::TripsController < ApplicationController
     end_location = GoogleAPI.coordinates(params[:end])
 
     trip.stops.create(name: params[:start], order:1, lat: start_location["lat"], lng: start_location["lng"])
-    trip.stops.create(name: params[:end], order:2, lat: end_location["lat"], lng: end_location["lng"])
+    trip.stops.create(name: params[:end], order:1, lat: end_location["lat"], lng: end_location["lng"])
 
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops) #Sorts the stops by order
