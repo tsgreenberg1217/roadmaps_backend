@@ -29,13 +29,15 @@ class Api::V1::TripsController < ApplicationController
   def create
     # binding.pry
     user = User.find(current_user.id)
-    user.trips.create(title: params[:trip], photo: params[:fileURL])
+    pic = ''
+    params[:fileURL] != '' ? pic = params[:fileURL] : pic = Pictures.defaultPic
+    user.trips.create(title: params[:trip], photo: pic)
     trip = user.trips.last
     start_location = GoogleAPI.coordinates(params[:start])
     end_location = GoogleAPI.coordinates(params[:end])
 
     trip.stops.create(name: params[:start], order:1, lat: start_location["lat"], lng: start_location["lng"])
-    trip.stops.create(name: params[:end], order:1, lat: end_location["lat"], lng: end_location["lng"])
+    trip.stops.create(name: params[:end], order:2, lat: end_location["lat"], lng: end_location["lng"])
 
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops) #Sorts the stops by order
