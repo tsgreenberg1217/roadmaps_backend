@@ -1,3 +1,4 @@
+require 'pry'
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authorized, only:[:create]
 
@@ -7,10 +8,16 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.create(name: params[:name], password: params[:password])
-    payload = {user_id: user.id}
-    token = issue_token(payload)
-    render json: {user: user, jwt: token}
+    user = User.new(name: params[:name], password: params[:password])
+    if user.save
+      user.save
+      payload = {user_id: user.id}
+      token = issue_token(payload)
+      render json: {user: user, jwt: token}
+    else
+      binding.pry
+      render json: {message: 'error with signup'}
+    end
   end
 
 
