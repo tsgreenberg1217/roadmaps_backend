@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
       token = issue_token(payload)
       render json: {user: user, jwt: token}
     else
-      binding.pry
+      # binding.pry
       render json: {message: 'error with signup'}
     end
   end
