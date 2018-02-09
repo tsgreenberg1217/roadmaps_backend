@@ -15,7 +15,6 @@ class Api::V1::UsersController < ApplicationController
       token = issue_token(payload)
       render json: {user: user, jwt: token}
     else
-      # binding.pry
       render json: {message: 'error with signup'}
     end
   end
@@ -24,7 +23,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :password, :email)
+    params.require(:user).permit(:name, :email)
   end
 
 end
