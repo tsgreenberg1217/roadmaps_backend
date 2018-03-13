@@ -24,18 +24,18 @@ class Api::V1::StopsController < ApplicationController
     trip_id = params[:trip_id]
     user = current_user
     trip = user.trips.find(trip_id)
-    # binding.pry
+    binding.pry
     order = trip.stops.count
-    # binding.pry
+    binding.pry
     new_order = trip.stops.count + 1
-    # binding.pry
+    binding.pry
     trip.stops.last.update(order: new_order)
-    # binding.pry
+    binding.pry
     trip.stops.create(name: params[:stop], order: order, lat: location["lat"], lng: location["lng"])
-    # binding.pry
+    binding.pry
     stops = trip.stops.all.sort_by{|stop| stop.order}
     Sorter.recount(stops) #Sorts the stops by order
-    # binding.pry
+    binding.pry
     stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
     stop = trip.stops.last
 
