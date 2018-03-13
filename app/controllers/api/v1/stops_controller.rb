@@ -20,31 +20,29 @@ class Api::V1::StopsController < ApplicationController
 
 
   def create
-    location = GoogleAPI.coordinates(params[:stop]) #Gets coordinates
-    trip_id = params[:trip_id]
     user = current_user
-    trip = user.trips.find(trip_id)
-    binding.pry
-    trip.stops.all.sort_by{|stop| stop.order}
-    binding.pry
+    trip = user.trips.find(params[:trip_id])
+    trip.stops.order(:order)
+    Sorter.recount(trip.stops)
+    # binding.pry
     order = trip.stops.count
-    binding.pry
     new_order = trip.stops.count + 1
-    binding.pry
-    trip.stops.last.update(order: new_order)
-    binding.pry
-    trip.stops.create(name: params[:stop], order: order, lat: location["lat"], lng: location["lng"])
-    binding.pry
-    stops = trip.stops.all.sort_by{|stop| stop.order}
-    binding.pry
-    Sorter.recount(stops) #Sorts the stops by order
-    binding.pry
-    stops = GoogleAPI.getDurations(stops) #gets and updates duration attributes
-    stop = trip.stops.last
 
+    last_trip = trip.stops.last
+    last_trip.update(order: new_order)
+    # binding.pry
+    location = GoogleAPI.coordinates(params[:stop]) #Gets coordinates
+    trip.stops.create(name: params[:stop], order: order, lat: location["lat"], lng: location["lng"])
+    # binding.pry
+    ordered_stops = trip.stops.order(:order)
+    # binding.pry
+    stops = GoogleAPI.getDurations(ordered_stops) #gets and updates duration attributes
+    stop = trip.stops.last
+    # binding.pry
     friends = []
-    trip.friendships.count > 0 ? friends = trip.friendships.map{|f| f.friend} : friends =['there are no friends']
-    binding.pry
+    # binding.pry
+    trip.friendships == [] ? friends = trip.friendships.map{|f| f.friend} : friends =['there are no friends']
+    # binding.pry
     render json: {stop:stop,  stops:stops, trip: user.trips, friends: friends}
   end
 
